@@ -75,7 +75,7 @@
 							"if(pm.response.code === 200){\r",
 							"    //is ok\r",
 							"} else if (pm.response.code === 500){\r",
-							"    if(pm.expect(pm.response.json().message).to.include(\"Error processing request\")){\r",
+							"    if(pm.expect(pm.response.json().message).to.include(\"Error Processing Request\")){\r",
 							"        //is ok\r",
 							"    } else {\r",
 							"       pm.expect.fail(\"Error 500\"); \r",
