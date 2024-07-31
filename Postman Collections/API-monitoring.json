@@ -234,6 +234,18 @@
 						"url": "https://swapi.dev/api/films"
 					},
 					"response": []
+				},
+				{
+					"name": "Listing Species",
+					"id": "8957535f-b78d-45c7-b900-ec1e00a80506",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				}
 			],
 			"id": "f062c863-f09f-487f-a0fe-4e6f0ad6a5f1"
