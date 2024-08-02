@@ -236,7 +236,7 @@
 					"response": []
 				},
 				{
-					"name": "Listing Species",
+					"name": "Listing Species_Page 1",
 					"event": [
 						{
 							"listen": "test",
@@ -400,14 +400,61 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Listing Species_Page 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "76b81ace-91de-44cb-9601-bd389bb90346",
+								"exec": [
+									"//Server Status\r",
+									"pm.test(\"Status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//Verify Species in Result\r",
+									"pm.test(\"Verify Species Listing\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var expectedName= [\r",
+									"        \"Neimodian\",\"Gungan\",\"Toydarian\",\"Dug\",\"Twi'lek\",\"Aleena\",\"Vulptereen\",\"Xexto\",\"Toong\",\"Cerean\"\r",
+									"    ];\r",
+									"\r",
+									"    // Iterate through each key in the expected API body and check the response\r",
+									"    expectedName.forEach(function(name, index) {\r",
+									"        pm.expect(jsonData.results[index].name).to.eql(name);\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"id": "cdf4cd31-fa78-4b4f-bda6-a426e23ec65e",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "https://swapi.dev/api/species?page=2",
+							"protocol": "https",
+							"host": [
+								"swapi",
+								"dev"
+							],
+							"path": [
+								"api",
+								"species"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
 					},
 					"response": []
 				}
