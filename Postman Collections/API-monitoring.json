@@ -266,7 +266,6 @@
 									"    var jsonData = pm.response.json();\r",
 									"    var expectedName= [\r",
 									"        \"Human\",\"Droid\",\"Wookie\",\"Rodian\",\"Hutt\",\"Yoda's species\",\"Trandoshan\",\"Mon Calamari\",\"Ewok\",\"Sullustan\",\r",
-									"        \"Neimodian\",\"Gungan\",\"Toydarian\",\"Dug\",\"Twi'lek\",\"Aleena\",\"Vulptereen\",\"Xexto\",\"Toong\",\r",
 									"    ];\r",
 									"\r",
 									"    // Iterate through each key in the expected API body and check the response\r",
@@ -376,6 +375,12 @@
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
+									"//Verify Count Field\r",
+									"pm.test(\"Verify Species Count\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.count).to.eql(37);\r",
+									"});\r",
+									"\r",
 									"//Verify Species in Result\r",
 									"pm.test(\"Verify Species Listing\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
@@ -435,6 +440,12 @@
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
+									"//Verify Count Field\r",
+									"pm.test(\"Verify Species Count\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.count).to.eql(37);\r",
+									"});\r",
+									"\r",
 									"//Verify Species in Result\r",
 									"pm.test(\"Verify Species Listing\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
@@ -483,6 +494,41 @@
 				},
 				{
 					"name": "Listing Species_Page 4",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "48775782-4c8a-46c3-b347-97ca53181a39",
+								"exec": [
+									"//Server Status\r",
+									"pm.test(\"Status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//Verify Count Field\r",
+									"pm.test(\"Verify Species Count\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.count).to.eql(37);\r",
+									"});\r",
+									"\r",
+									"//Verify Species in Result\r",
+									"pm.test(\"Verify Species Listing\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var expectedName= [\r",
+									"        \"Besalisk\", \"Kaminoan\",\"Skakoan\", \"Muun\", \"Togruta\", \"Kaleesh\", \"Pau'an\", \r",
+									"    ];\r",
+									"\r",
+									"    // Iterate through each key in the expected API body and check the response\r",
+									"    expectedName.forEach(function(name, index) {\r",
+									"        pm.expect(jsonData.results[index].name).to.eql(name);\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"id": "bfde7d77-9a62-4dd1-81bc-31302968bd07",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
