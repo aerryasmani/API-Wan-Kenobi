@@ -353,6 +353,18 @@
 						"url": "https://swapi.dev/api/species/"
 					},
 					"response": []
+				},
+				{
+					"name": "New Request",
+					"id": "cdf4cd31-fa78-4b4f-bda6-a426e23ec65e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				}
 			],
 			"id": "f062c863-f09f-487f-a0fe-4e6f0ad6a5f1"
