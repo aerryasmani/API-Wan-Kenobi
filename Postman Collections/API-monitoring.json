@@ -480,6 +480,36 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Listing Species_Page 4",
+					"id": "bfde7d77-9a62-4dd1-81bc-31302968bd07",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://swapi.dev/api/species?page=4",
+							"protocol": "https",
+							"host": [
+								"swapi",
+								"dev"
+							],
+							"path": [
+								"api",
+								"species"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"id": "f062c863-f09f-487f-a0fe-4e6f0ad6a5f1"
