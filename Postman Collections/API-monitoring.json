@@ -13,36 +13,14 @@
 					"name": "All Listing",
 					"event": [
 						{
-							"listen": "prerequest",
-							"script": {
-								"id": "117aab87-c811-422d-b599-14530cc11817",
-								"exec": [
-									"console.log(pm.globals.get(\"Prod_URL\")); "
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						},
-						{
 							"listen": "test",
 							"script": {
-								"id": "9e207b67-c2ea-48a6-843d-8c119c9539c8",
+								"id": "190c2363-ec2d-4315-a8a3-1423e15cccc3",
 								"exec": [
 									"//Server Status\r",
 									"pm.test(\"Status code is 200\", function(){\r",
-									"if(pm.response.code === 200){\r",
-									"    //is ok\r",
-									"} else if (pm.response.code === 500){\r",
-									"    if(pm.expect(pm.response.json().message).to.include(\"Error Processing Request\")){\r",
-									"        //is ok\r",
-									"    } else {\r",
-									"       pm.expect.fail(\"Error 500\"); \r",
-									"    }\r",
-									"} else {\r",
-									"    pm.expect.fail(\"statuscode not 200 or 500\");\r",
-									"}\r",
+									"    pm.response.to.have.status(200);\r",
 									"});\r",
-									"\r",
 									"\r",
 									"//Verify General Structure\r",
 									"pm.test(\"Response structure is valid\", function () {\r",
@@ -50,50 +28,25 @@
 									"    \r",
 									"    // Check top-level structure\r",
 									"    pm.expect(jsonData).to.be.an('object');\r",
-									"    pm.expect(jsonData).to.have.property('count');\r",
-									"    pm.expect(jsonData).to.have.property('next');\r",
-									"    pm.expect(jsonData).to.have.property('previous');\r",
-									"    pm.expect(jsonData).to.have.property('results').and.to.be.an('array');\r",
-									"});\r",
-									"\r",
-									"//Verify Film Structure Count\r",
-									"pm.test(\"Verify Film Structure Count\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    // Validate each film in results\r",
-									"    jsonData.results.forEach(function(film) {\r",
-									"        pm.expect(film).to.have.property('title').and.to.be.a('string');\r",
-									"        pm.expect(film).to.have.property('episode_id').and.to.be.a('number');\r",
-									"        pm.expect(film).to.have.property('opening_crawl').and.to.be.a('string');\r",
-									"        pm.expect(film).to.have.property('director').and.to.be.a('string');\r",
-									"        pm.expect(film).to.have.property('producer').and.to.be.a('string');\r",
-									"        pm.expect(film).to.have.property('release_date').and.to.be.a('string');\r",
-									"        pm.expect(film).to.have.property('characters').and.to.be.an('array');\r",
-									"        pm.expect(film).to.have.property('planets').and.to.be.an('array');\r",
-									"        pm.expect(film).to.have.property('starships').and.to.be.an('array');\r",
-									"        pm.expect(film).to.have.property('vehicles').and.to.be.an('array');\r",
-									"        pm.expect(film).to.have.property('species').and.to.be.an('array');\r",
-									"        pm.expect(film).to.have.property('created').and.to.be.a('string');\r",
-									"        pm.expect(film).to.have.property('edited').and.to.be.a('string');\r",
-									"        pm.expect(film).to.have.property('url').and.to.be.a('string');\r",
-									"    });\r",
-									"});\r",
-									"\r",
-									"//Verify Count Field\r",
-									"pm.test(\"Verify Movies Count\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.count).to.eql(6);\r",
+									"    pm.expect(jsonData).to.have.property('people');\r",
+									"    pm.expect(jsonData).to.have.property('planets');\r",
+									"    pm.expect(jsonData).to.have.property('films');\r",
+									"    pm.expect(jsonData).to.have.property('species');\r",
+									"    pm.expect(jsonData).to.have.property('vehicles');\r",
+									"    pm.expect(jsonData).to.have.property('starships');\r",
 									"});\r",
 									"\r",
 									"//Verify API Format Structure\r",
 									"pm.test(\"verify API Format Structure\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    jsonData.results.forEach(function(film) {\r",
-									"        pm.expect(film.url).to.match(/^https:\\/\\/swapi\\.dev\\/api\\/\\d+\\/$/);\r",
+									"    var jsonData = pm.response.json(); // Moved the variable declaration to the top\r",
+									"    const urlRegex = /^https:\\/\\/swapi\\.dev\\/api\\/[a-z]+\\/$/;\r",
+									"    Object.values(jsonData).forEach(url => {\r",
+									"        pm.expect(url).to.match(urlRegex);\r",
 									"    });\r",
 									"});\r",
-									"//////////////////\r",
+									"\r",
 									"pm.test(\"Validate API Listing\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
+									"    var jsonData = pm.response.json(); // Moved the variable declaration to the top\r",
 									"    var expectedApiBody = {\r",
 									"        \"people\": \"https://swapi.dev/api/people/\",\r",
 									"        \"planets\": \"https://swapi.dev/api/planets/\",\r",
@@ -109,6 +62,17 @@
 									"    });\r",
 									"});\r",
 									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "9472a7fc-6333-41e3-aa0f-92fdeea52e21",
+								"exec": [
+									"console.log(pm.globals.get(\"Prod_URL\")); "
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -452,6 +416,65 @@
 								{
 									"key": "page",
 									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listing Species_Page 3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "abbb134c-cfb3-4ae3-94bb-c5434c79ac2a",
+								"exec": [
+									"//Server Status\r",
+									"pm.test(\"Status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//Verify Species in Result\r",
+									"pm.test(\"Verify Species Listing\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var expectedName= [\r",
+									"        \"Nautolan\",\"Zabrak\",\"Tholothian\",\"Iktotchi\",\"Quermian\", \"Kel Dor\",\"Chagrian\", \"Geonosian\", \"Mirialan\", \"Clawdite\", \r",
+									"    ];\r",
+									"\r",
+									"    // Iterate through each key in the expected API body and check the response\r",
+									"    expectedName.forEach(function(name, index) {\r",
+									"        pm.expect(jsonData.results[index].name).to.eql(name);\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "ad321da1-b004-4c00-8298-987263782d2a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://swapi.dev/api/species?page=3",
+							"protocol": "https",
+							"host": [
+								"swapi",
+								"dev"
+							],
+							"path": [
+								"api",
+								"species"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "3"
 								}
 							]
 						}
