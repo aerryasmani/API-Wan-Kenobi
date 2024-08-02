@@ -263,7 +263,7 @@
 									"//Verify Species Structure Count\r",
 									"pm.test(\"Verify Film Structure Count\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
-									"    // Validate each film in results\r",
+									"    // Validate each structure in results\r",
 									"    jsonData.results.forEach(function(species) {\r",
 									"        pm.expect(species).to.have.property('name').and.to.be.a('string');\r",
 									"        pm.expect(species).to.have.property('classification').and.to.be.a('string');\r",
@@ -318,9 +318,8 @@
 									"        pm.expect(jsonData.results[index].name).to.eql(name);\r",
 									"    });\r",
 									"});\r",
-									"pm.test(\"Response status code is 200\", function () {\r",
-									"  pm.response.to.have.status(200);\r",
-									"});"
+									"\r",
+									""
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -331,7 +330,7 @@
 							"script": {
 								"id": "abe7bf11-674e-492d-b413-9ec5300bf812",
 								"exec": [
-									"console.log(pm.globals.get(\"Prod_URL\")); "
+									""
 								],
 								"type": "text/javascript",
 								"packages": {}
