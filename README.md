@@ -1,2 +1,11 @@
 # API-Wan-Kenobi
-This is a repositories for API Automation Monitoring Test Suites for SWAPI. 
+For the purpose of :
+Learning and implementing the monitoring the health API.
+Learning Javascript
+Creating Test case for API related scenario
+
+
+
+
+
+
