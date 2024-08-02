@@ -239,20 +239,9 @@
 					"name": "Listing Species",
 					"event": [
 						{
-							"listen": "prerequest",
-							"script": {
-								"id": "49c41f57-6d65-47d5-8883-7d77a80efb64",
-								"exec": [
-									"console.log(pm.globals.get(\"Prod_URL\")); "
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						},
-						{
 							"listen": "test",
 							"script": {
-								"id": "fab1296d-7678-4878-a950-e6d5e7a08925",
+								"id": "1b581c63-633f-4788-ac66-32e16a71ec6a",
 								"exec": [
 									"//Server Status\r",
 									"pm.test(\"Status code is 200\", function(){\r",
@@ -309,23 +298,40 @@
 									"});\r",
 									"\r",
 									"//Verify Film in Result\r",
-									"pm.test(\"Verify Films Listing\", function () {\r",
+									"pm.test(\"Verify Species Listing\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
-									"    var expectedTitles = [\r",
-									"        \"A New Hope\",\r",
-									"        \"The Empire Strikes Back\",\r",
-									"        \"Return of the Jedi\",\r",
-									"        \"The Phantom Menace\",\r",
-									"        \"Attack of the Clones\",\r",
-									"        \"Revenge of the Sith\",\r",
+									"    var expectedName= [\r",
+									"        \"Human\",\r",
+									"        \"Droid\",\r",
+									"        \"Wookie\",\r",
+									"        \"Rodian\",\r",
+									"        \"Hutt\",\r",
+									"        \"Yoda's species\",\r",
+									"        \"Trandoshan\",\r",
+									"        \"Mon Calamari\",\r",
+									"        \"Ewok\",\r",
+									"        \"Sullustan\",\r",
 									"    ];\r",
 									"\r",
 									"    // Iterate through each key in the expected API body and check the response\r",
-									"    expectedTitles.forEach(function(title, index) {\r",
-									"        pm.expect(jsonData.results[index].title).to.eql(title);\r",
+									"    expectedName.forEach(function(name, index) {\r",
+									"        pm.expect(jsonData.results[index].name).to.eql(name);\r",
 									"    });\r",
 									"});\r",
-									""
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "abe7bf11-674e-492d-b413-9ec5300bf812",
+								"exec": [
+									"console.log(pm.globals.get(\"Prod_URL\")); "
 								],
 								"type": "text/javascript",
 								"packages": {}
