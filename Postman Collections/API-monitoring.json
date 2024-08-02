@@ -312,21 +312,8 @@
 									"\r",
 									"\r",
 									"//Playground\r",
-									"let response = pm.response.json();\r",
-									"let allResults = pm.variables.get(\"allResults\") ? JSON.parse(pm.variables.get(\"allResults\")) : [];\r",
 									"\r",
-									"allResults = allResults.concat(response.results);\r",
-									"pm.variables.set(\"allResults\", JSON.stringify(allResults));\r",
 									"\r",
-									"if (response.next) {\r",
-									"    pm.variables.set(\"url\", response.next);\r",
-									"    postman.setNextRequest(pm.info.requestName);\r",
-									"} else {\r",
-									"    console.log(\"All species data:\", allResults);\r",
-									"    // Clear the variable for next run\r",
-									"    pm.variables.unset(\"url\");\r",
-									"    pm.variables.unset(\"allResults\");\r",
-									"}\r",
 									"\r",
 									""
 								],
@@ -339,9 +326,6 @@
 							"script": {
 								"id": "abe7bf11-674e-492d-b413-9ec5300bf812",
 								"exec": [
-									"if (!pm.variables.get(\"url\")) {\r",
-									"    pm.variables.set(\"url\", \"https://swapi.dev/api/species\");\r",
-									"}\r",
 									""
 								],
 								"type": "text/javascript",
