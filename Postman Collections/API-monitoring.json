@@ -297,7 +297,7 @@
 									"    });\r",
 									"});\r",
 									"\r",
-									"//Verify Film in Result\r",
+									"//Verify Species in Result\r",
 									"pm.test(\"Verify Species Listing\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    var expectedName= [\r",
@@ -312,7 +312,17 @@
 									"\r",
 									"\r",
 									"//Playground\r",
+									"pm.test(\"Correct number of items\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var pageNumber = pm.variables.get(\"page\");\r",
+									"    var expectedItems = (pageNumber < 4) ? 10 : 7;\r",
+									"    pm.expect(jsonData.items.length).to.equal(expectedItems);\r",
+									"});\r",
 									"\r",
+									"pm.test(\"Total count is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.total_count).to.equal(37);\r",
+									"});\r",
 									"\r",
 									"\r",
 									""
@@ -346,7 +356,28 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "https://swapi.dev/api/species"
+						"url": {
+							"raw": "https://swapi.dev/api/species?page=1&size=4",
+							"protocol": "https",
+							"host": [
+								"swapi",
+								"dev"
+							],
+							"path": [
+								"api",
+								"species"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "4"
+								}
+							]
+						}
 					},
 					"response": []
 				},
