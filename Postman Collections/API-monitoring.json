@@ -302,6 +302,7 @@
 									"    var jsonData = pm.response.json();\r",
 									"    var expectedName= [\r",
 									"        \"Human\",\"Droid\",\"Wookie\",\"Rodian\",\"Hutt\",\"Yoda's species\",\"Trandoshan\",\"Mon Calamari\",\"Ewok\",\"Sullustan\",\r",
+									"        \"Neimodian\",\"Gungan\",\"Toydarian\",\"Dug\",\"Twi'lek\",\"Aleena\",\"Vulptereen\",\"Xexto\",\"Toong\",\r",
 									"    ];\r",
 									"\r",
 									"    // Iterate through each key in the expected API body and check the response\r",
