@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "5d94dea9-00fc-4040-a156-d18c59662216",
 		"name": "SWAPI Listing",
-		"description": "This is a Automation API Testing for SWAPI (Star Wars API). For learning and implementing the monitoring the health API.",
+		"description": "This is a Automation API Testing for SWAPI (Star Wars API).\n\nFor the purpose of :\n\n1. Learning and implementing the monitoring the health API.\n    \n2. Learning Javascript\n    \n3. Creating Test case for API related scenario",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
