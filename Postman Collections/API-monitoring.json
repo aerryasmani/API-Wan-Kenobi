@@ -7,197 +7,122 @@
 	},
 	"item": [
 		{
-			"name": "General Listing",
+			"name": "Species",
 			"item": [
 				{
-					"name": "All Listing",
-					"event": [
+					"name": "Films",
+					"item": [
 						{
-							"listen": "test",
-							"script": {
-								"id": "190c2363-ec2d-4315-a8a3-1423e15cccc3",
-								"exec": [
-									"//Server Status\r",
-									"pm.test(\"Status code is 200\", function(){\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"\r",
-									"//Verify General Structure\r",
-									"pm.test(\"Response structure is valid\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    \r",
-									"    // Check top-level structure\r",
-									"    pm.expect(jsonData).to.be.an('object');\r",
-									"    pm.expect(jsonData).to.have.property('people');\r",
-									"    pm.expect(jsonData).to.have.property('planets');\r",
-									"    pm.expect(jsonData).to.have.property('films');\r",
-									"    pm.expect(jsonData).to.have.property('species');\r",
-									"    pm.expect(jsonData).to.have.property('vehicles');\r",
-									"    pm.expect(jsonData).to.have.property('starships');\r",
-									"});\r",
-									"\r",
-									"//Verify API Format Structure\r",
-									"pm.test(\"verify API Format Structure\", function () {\r",
-									"    var jsonData = pm.response.json(); // Moved the variable declaration to the top\r",
-									"    const urlRegex = /^https:\\/\\/swapi\\.dev\\/api\\/[a-z]+\\/$/;\r",
-									"    Object.values(jsonData).forEach(url => {\r",
-									"        pm.expect(url).to.match(urlRegex);\r",
-									"    });\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Validate API Listing\", function () {\r",
-									"    var jsonData = pm.response.json(); // Moved the variable declaration to the top\r",
-									"    var expectedApiBody = {\r",
-									"        \"people\": \"https://swapi.dev/api/people/\",\r",
-									"        \"planets\": \"https://swapi.dev/api/planets/\",\r",
-									"        \"films\": \"https://swapi.dev/api/films/\",\r",
-									"        \"species\": \"https://swapi.dev/api/species/\",\r",
-									"        \"vehicles\": \"https://swapi.dev/api/vehicles/\",\r",
-									"        \"starships\": \"https://swapi.dev/api/starships/\"\r",
-									"    };\r",
-									"\r",
-									"    // Iterate through each key in the expected API body and check the response\r",
-									"    Object.keys(expectedApiBody).forEach(function(key) {\r",
-									"        pm.expect(jsonData[key]).to.eql(expectedApiBody[key]);\r",
-									"    });\r",
-									"});\r",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "9472a7fc-6333-41e3-aa0f-92fdeea52e21",
-								"exec": [
-									"console.log(pm.globals.get(\"Prod_URL\")); "
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
+							"name": "Listing Films",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5e303351-3e43-4634-9e6b-7eb5c0c25f9e",
+										"exec": [
+											"//Server Status\r",
+											"pm.test(\"Status code is 200\", function(){\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"//Verify General Structure\r",
+											"pm.test(\"Response structure is valid\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    \r",
+											"    // Check top-level structure\r",
+											"    pm.expect(jsonData).to.be.an('object');\r",
+											"    pm.expect(jsonData).to.have.property('count');\r",
+											"    pm.expect(jsonData).to.have.property('next');\r",
+											"    pm.expect(jsonData).to.have.property('previous');\r",
+											"    pm.expect(jsonData).to.have.property('results').and.to.be.an('array');\r",
+											"});\r",
+											"\r",
+											"//Verify Film Structure Count\r",
+											"pm.test(\"Verify Film Structure Count\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    // Validate each film in results\r",
+											"    jsonData.results.forEach(function(film) {\r",
+											"        pm.expect(film).to.have.property('title').and.to.be.a('string');\r",
+											"        pm.expect(film).to.have.property('episode_id').and.to.be.a('number');\r",
+											"        pm.expect(film).to.have.property('opening_crawl').and.to.be.a('string');\r",
+											"        pm.expect(film).to.have.property('director').and.to.be.a('string');\r",
+											"        pm.expect(film).to.have.property('producer').and.to.be.a('string');\r",
+											"        pm.expect(film).to.have.property('release_date').and.to.be.a('string');\r",
+											"        pm.expect(film).to.have.property('characters').and.to.be.an('array');\r",
+											"        pm.expect(film).to.have.property('planets').and.to.be.an('array');\r",
+											"        pm.expect(film).to.have.property('starships').and.to.be.an('array');\r",
+											"        pm.expect(film).to.have.property('vehicles').and.to.be.an('array');\r",
+											"        pm.expect(film).to.have.property('species').and.to.be.an('array');\r",
+											"        pm.expect(film).to.have.property('created').and.to.be.a('string');\r",
+											"        pm.expect(film).to.have.property('edited').and.to.be.a('string');\r",
+											"        pm.expect(film).to.have.property('url').and.to.be.a('string');\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"//Verify Count Field\r",
+											"pm.test(\"Verify Movies Count\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.count).to.eql(6);\r",
+											"});\r",
+											"\r",
+											"//Verify API Format Structure\r",
+											"pm.test(\"verify API Format Structure\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    jsonData.results.forEach(function(film) {\r",
+											"        pm.expect(film.url).to.match(/^https:\\/\\/swapi\\.dev\\/api\\/films\\/\\d+\\/$/);\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"//Verify Film in Result\r",
+											"pm.test(\"Verify Films Listing\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    var expectedTitles = [\r",
+											"        \"A New Hope\",\r",
+											"        \"The Empire Strikes Back\",\r",
+											"        \"Return of the Jedi\",\r",
+											"        \"The Phantom Menace\",\r",
+											"        \"Attack of the Clones\",\r",
+											"        \"Revenge of the Sith\",\r",
+											"    ];\r",
+											"\r",
+											"    // Iterate through each key in the expected API body and check the response\r",
+											"    expectedTitles.forEach(function(title, index) {\r",
+											"        pm.expect(jsonData.results[index].title).to.eql(title);\r",
+											"    });\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "6877d802-23f6-4fd0-a711-2008ec953f0f",
+										"exec": [
+											"console.log(pm.globals.get(\"Prod_URL\")); \r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"id": "21cdfcfd-6b2a-4d98-b0c7-4d2a74d888c9",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "https://swapi.dev/api/films"
+							},
+							"response": []
 						}
 					],
-					"id": "30982b35-4180-46e5-9176-ebaf76cdc1f1",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": "https://swapi.dev/api/"
-					},
-					"response": []
-				},
-				{
-					"name": "Listing Films",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "5e303351-3e43-4634-9e6b-7eb5c0c25f9e",
-								"exec": [
-									"//Server Status\r",
-									"pm.test(\"Status code is 200\", function(){\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"\r",
-									"//Verify General Structure\r",
-									"pm.test(\"Response structure is valid\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    \r",
-									"    // Check top-level structure\r",
-									"    pm.expect(jsonData).to.be.an('object');\r",
-									"    pm.expect(jsonData).to.have.property('count');\r",
-									"    pm.expect(jsonData).to.have.property('next');\r",
-									"    pm.expect(jsonData).to.have.property('previous');\r",
-									"    pm.expect(jsonData).to.have.property('results').and.to.be.an('array');\r",
-									"});\r",
-									"\r",
-									"//Verify Film Structure Count\r",
-									"pm.test(\"Verify Film Structure Count\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    // Validate each film in results\r",
-									"    jsonData.results.forEach(function(film) {\r",
-									"        pm.expect(film).to.have.property('title').and.to.be.a('string');\r",
-									"        pm.expect(film).to.have.property('episode_id').and.to.be.a('number');\r",
-									"        pm.expect(film).to.have.property('opening_crawl').and.to.be.a('string');\r",
-									"        pm.expect(film).to.have.property('director').and.to.be.a('string');\r",
-									"        pm.expect(film).to.have.property('producer').and.to.be.a('string');\r",
-									"        pm.expect(film).to.have.property('release_date').and.to.be.a('string');\r",
-									"        pm.expect(film).to.have.property('characters').and.to.be.an('array');\r",
-									"        pm.expect(film).to.have.property('planets').and.to.be.an('array');\r",
-									"        pm.expect(film).to.have.property('starships').and.to.be.an('array');\r",
-									"        pm.expect(film).to.have.property('vehicles').and.to.be.an('array');\r",
-									"        pm.expect(film).to.have.property('species').and.to.be.an('array');\r",
-									"        pm.expect(film).to.have.property('created').and.to.be.a('string');\r",
-									"        pm.expect(film).to.have.property('edited').and.to.be.a('string');\r",
-									"        pm.expect(film).to.have.property('url').and.to.be.a('string');\r",
-									"    });\r",
-									"});\r",
-									"\r",
-									"//Verify Count Field\r",
-									"pm.test(\"Verify Movies Count\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.count).to.eql(6);\r",
-									"});\r",
-									"\r",
-									"//Verify API Format Structure\r",
-									"pm.test(\"verify API Format Structure\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    jsonData.results.forEach(function(film) {\r",
-									"        pm.expect(film.url).to.match(/^https:\\/\\/swapi\\.dev\\/api\\/films\\/\\d+\\/$/);\r",
-									"    });\r",
-									"});\r",
-									"\r",
-									"//Verify Film in Result\r",
-									"pm.test(\"Verify Films Listing\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    var expectedTitles = [\r",
-									"        \"A New Hope\",\r",
-									"        \"The Empire Strikes Back\",\r",
-									"        \"Return of the Jedi\",\r",
-									"        \"The Phantom Menace\",\r",
-									"        \"Attack of the Clones\",\r",
-									"        \"Revenge of the Sith\",\r",
-									"    ];\r",
-									"\r",
-									"    // Iterate through each key in the expected API body and check the response\r",
-									"    expectedTitles.forEach(function(title, index) {\r",
-									"        pm.expect(jsonData.results[index].title).to.eql(title);\r",
-									"    });\r",
-									"});\r",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "6877d802-23f6-4fd0-a711-2008ec953f0f",
-								"exec": [
-									"console.log(pm.globals.get(\"Prod_URL\")); \r",
-									"\r",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"id": "21cdfcfd-6b2a-4d98-b0c7-4d2a74d888c9",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": "https://swapi.dev/api/films"
-					},
-					"response": []
+					"id": "60b8df9e-9627-4785-ac51-f88ac84542c6"
 				},
 				{
 					"name": "Listing Species_Page 1",
@@ -568,6 +493,93 @@
 								}
 							]
 						}
+					},
+					"response": []
+				}
+			],
+			"id": "4f4bf1cd-ae53-4f92-b299-d6f75d785af3"
+		},
+		{
+			"name": "General Listing",
+			"item": [
+				{
+					"name": "All Listing",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "190c2363-ec2d-4315-a8a3-1423e15cccc3",
+								"exec": [
+									"//Server Status\r",
+									"pm.test(\"Status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//Verify General Structure\r",
+									"pm.test(\"Response structure is valid\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    \r",
+									"    // Check top-level structure\r",
+									"    pm.expect(jsonData).to.be.an('object');\r",
+									"    pm.expect(jsonData).to.have.property('people');\r",
+									"    pm.expect(jsonData).to.have.property('planets');\r",
+									"    pm.expect(jsonData).to.have.property('films');\r",
+									"    pm.expect(jsonData).to.have.property('species');\r",
+									"    pm.expect(jsonData).to.have.property('vehicles');\r",
+									"    pm.expect(jsonData).to.have.property('starships');\r",
+									"});\r",
+									"\r",
+									"//Verify API Format Structure\r",
+									"pm.test(\"verify API Format Structure\", function () {\r",
+									"    var jsonData = pm.response.json(); // Moved the variable declaration to the top\r",
+									"    const urlRegex = /^https:\\/\\/swapi\\.dev\\/api\\/[a-z]+\\/$/;\r",
+									"    Object.values(jsonData).forEach(url => {\r",
+									"        pm.expect(url).to.match(urlRegex);\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate API Listing\", function () {\r",
+									"    var jsonData = pm.response.json(); // Moved the variable declaration to the top\r",
+									"    var expectedApiBody = {\r",
+									"        \"people\": \"https://swapi.dev/api/people/\",\r",
+									"        \"planets\": \"https://swapi.dev/api/planets/\",\r",
+									"        \"films\": \"https://swapi.dev/api/films/\",\r",
+									"        \"species\": \"https://swapi.dev/api/species/\",\r",
+									"        \"vehicles\": \"https://swapi.dev/api/vehicles/\",\r",
+									"        \"starships\": \"https://swapi.dev/api/starships/\"\r",
+									"    };\r",
+									"\r",
+									"    // Iterate through each key in the expected API body and check the response\r",
+									"    Object.keys(expectedApiBody).forEach(function(key) {\r",
+									"        pm.expect(jsonData[key]).to.eql(expectedApiBody[key]);\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "9472a7fc-6333-41e3-aa0f-92fdeea52e21",
+								"exec": [
+									"console.log(pm.globals.get(\"Prod_URL\")); "
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "30982b35-4180-46e5-9176-ebaf76cdc1f1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://swapi.dev/api/"
 					},
 					"response": []
 				}
