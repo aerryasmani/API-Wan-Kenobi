@@ -597,7 +597,7 @@
 			"name": "Planets",
 			"item": [
 				{
-					"name": "Listing",
+					"name": "Listing Planets",
 					"id": "f8c96d68-2990-42ad-9f2e-8a13227817e7",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
