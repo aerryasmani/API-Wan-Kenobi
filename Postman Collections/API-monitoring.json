@@ -204,58 +204,6 @@
 						"url": "https://swapi.dev/api/films"
 					},
 					"response": []
-				},
-				{
-					"name": "https://swapi.dev/api/films?page=1",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "2965c68c-bb8b-47ca-8e9f-e589f9bce622",
-								"exec": [
-									"//Server Status\r",
-									"pm.test(\"Status code is 200\", function(){\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"\r",
-									"//Verify Count Field\r",
-									"pm.test(\"Verify Films Count\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.count).to.eql(6);\r",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"id": "1717f5b3-fa7b-451c-aa54-c79a02e4fa83",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://swapi.dev/api/films?page=1",
-							"protocol": "https",
-							"host": [
-								"swapi",
-								"dev"
-							],
-							"path": [
-								"api",
-								"films"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
 				}
 			],
 			"id": "60b8df9e-9627-4785-ac51-f88ac84542c6"
@@ -644,6 +592,24 @@
 				}
 			],
 			"id": "4f4bf1cd-ae53-4f92-b299-d6f75d785af3"
+		},
+		{
+			"name": "Planets",
+			"item": [
+				{
+					"name": "Listing",
+					"id": "f8c96d68-2990-42ad-9f2e-8a13227817e7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
+			"id": "ad5f691e-0f2f-4f5a-b4a8-4be86681d679"
 		}
 	]
 }
