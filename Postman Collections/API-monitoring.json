@@ -205,7 +205,16 @@
 									"        ]\r",
 									"    });\r",
 									"});\r",
-									""
+									"\r",
+									"pm.test(\"Content-Type is correct for OPTIONS response\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Unsupported methods are not allowed\", function () {\r",
+									"    const allowedMethods = pm.response.headers.get(\"Access-Control-Allow-Methods\").split(\", \");\r",
+									"    pm.expect(allowedMethods).to.not.include(\"PATCH\");\r",
+									"});"
 								],
 								"type": "text/javascript",
 								"packages": {}
