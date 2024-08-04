@@ -678,6 +678,73 @@
 				},
 				{
 					"name": "Listing Planets_Page 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "155420a2-8286-4e0f-8782-abfa75000875",
+								"exec": [
+									"//Server Status\r",
+									"pm.test(\"Status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//Verify General Structure\r",
+									"pm.test(\"Response structure is valid\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    \r",
+									"    // Check top-level structure\r",
+									"    pm.expect(jsonData).to.be.an('object');\r",
+									"    pm.expect(jsonData).to.have.property('count');\r",
+									"    pm.expect(jsonData).to.have.property('next');\r",
+									"    pm.expect(jsonData).to.have.property('previous');\r",
+									"    pm.expect(jsonData).to.have.property('results').and.to.be.an('array');\r",
+									"});\r",
+									"\r",
+									"//Verify Film Structure Count\r",
+									"pm.test(\"Verify planets Structure Count\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    // Validate each planets  in results\r",
+									"    jsonData.results.forEach(function(planets) {\r",
+									"        pm.expect(planets).to.have.property('name').and.to.be.a('string');\r",
+									"        pm.expect(planets).to.have.property('rotation_period').and.to.be.a('string');\r",
+									"        pm.expect(planets).to.have.property('orbital_period').and.to.be.a('string');\r",
+									"        pm.expect(planets).to.have.property('diameter').and.to.be.a('string');\r",
+									"        pm.expect(planets).to.have.property('climate').and.to.be.a('string');\r",
+									"        pm.expect(planets).to.have.property('gravity').and.to.be.a('string');\r",
+									"        pm.expect(planets).to.have.property('terrain').and.to.be.an('string');\r",
+									"        pm.expect(planets).to.have.property('surface_water').and.to.be.an('string');\r",
+									"        pm.expect(planets).to.have.property('population').and.to.be.an('string');\r",
+									"        pm.expect(planets).to.have.property('residents').and.to.be.an('array');\r",
+									"        pm.expect(planets).to.have.property('films').and.to.be.an('array');\r",
+									"        pm.expect(planets).to.have.property('created').and.to.be.a('string');\r",
+									"        pm.expect(planets).to.have.property('edited').and.to.be.a('string');\r",
+									"        pm.expect(planets).to.have.property('url').and.to.be.a('string');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"//Verify Count Field\r",
+									"pm.test(\"Verify Planet Count\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.count).to.eql(60);\r",
+									"});\r",
+									"\r",
+									"//Verify API Format Structure\r",
+									"pm.test(\"verify API Format Structure\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    jsonData.results.forEach(function(film) {\r",
+									"        pm.expect(film.url).to.match(/^https:\\/\\/swapi\\.dev\\/api\\/planets\\/\\d+\\/$/);\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"id": "a172c49b-95c2-4ff8-8eb3-d211cf4fbbe0",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -685,12 +752,96 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": ""
+						"url": {
+							"raw": "https://swapi.dev/api/planets?page=2",
+							"protocol": "https",
+							"host": [
+								"swapi",
+								"dev"
+							],
+							"path": [
+								"api",
+								"planets"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Listing Planets_Page 3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "687b424f-35bd-4baf-8285-d5e64e1abe35",
+								"exec": [
+									"//Server Status\r",
+									"pm.test(\"Status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//Verify General Structure\r",
+									"pm.test(\"Response structure is valid\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    \r",
+									"    // Check top-level structure\r",
+									"    pm.expect(jsonData).to.be.an('object');\r",
+									"    pm.expect(jsonData).to.have.property('count');\r",
+									"    pm.expect(jsonData).to.have.property('next');\r",
+									"    pm.expect(jsonData).to.have.property('previous');\r",
+									"    pm.expect(jsonData).to.have.property('results').and.to.be.an('array');\r",
+									"});\r",
+									"\r",
+									"//Verify Film Structure Count\r",
+									"pm.test(\"Verify planets Structure Count\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    // Validate each planets  in results\r",
+									"    jsonData.results.forEach(function(planets) {\r",
+									"        pm.expect(planets).to.have.property('name').and.to.be.a('string');\r",
+									"        pm.expect(planets).to.have.property('rotation_period').and.to.be.a('string');\r",
+									"        pm.expect(planets).to.have.property('orbital_period').and.to.be.a('string');\r",
+									"        pm.expect(planets).to.have.property('diameter').and.to.be.a('string');\r",
+									"        pm.expect(planets).to.have.property('climate').and.to.be.a('string');\r",
+									"        pm.expect(planets).to.have.property('gravity').and.to.be.a('string');\r",
+									"        pm.expect(planets).to.have.property('terrain').and.to.be.an('string');\r",
+									"        pm.expect(planets).to.have.property('surface_water').and.to.be.an('string');\r",
+									"        pm.expect(planets).to.have.property('population').and.to.be.an('string');\r",
+									"        pm.expect(planets).to.have.property('residents').and.to.be.an('array');\r",
+									"        pm.expect(planets).to.have.property('films').and.to.be.an('array');\r",
+									"        pm.expect(planets).to.have.property('created').and.to.be.a('string');\r",
+									"        pm.expect(planets).to.have.property('edited').and.to.be.a('string');\r",
+									"        pm.expect(planets).to.have.property('url').and.to.be.a('string');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"//Verify Count Field\r",
+									"pm.test(\"Verify Planet Count\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.count).to.eql(60);\r",
+									"});\r",
+									"\r",
+									"//Verify API Format Structure\r",
+									"pm.test(\"verify API Format Structure\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    jsonData.results.forEach(function(film) {\r",
+									"        pm.expect(film.url).to.match(/^https:\\/\\/swapi\\.dev\\/api\\/planets\\/\\d+\\/$/);\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"id": "2734475a-938f-4e1d-a02e-e65cc1fc4acc",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -698,12 +849,96 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": ""
+						"url": {
+							"raw": "https://swapi.dev/api/planets?page=3",
+							"protocol": "https",
+							"host": [
+								"swapi",
+								"dev"
+							],
+							"path": [
+								"api",
+								"planets"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "3"
+								}
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Listing Planets_Page 4",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c9cb33d6-9f35-4d3f-b4d2-cb8eccbc3963",
+								"exec": [
+									"//Server Status\r",
+									"pm.test(\"Status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//Verify General Structure\r",
+									"pm.test(\"Response structure is valid\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    \r",
+									"    // Check top-level structure\r",
+									"    pm.expect(jsonData).to.be.an('object');\r",
+									"    pm.expect(jsonData).to.have.property('count');\r",
+									"    pm.expect(jsonData).to.have.property('next');\r",
+									"    pm.expect(jsonData).to.have.property('previous');\r",
+									"    pm.expect(jsonData).to.have.property('results').and.to.be.an('array');\r",
+									"});\r",
+									"\r",
+									"//Verify Film Structure Count\r",
+									"pm.test(\"Verify planets Structure Count\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    // Validate each planets  in results\r",
+									"    jsonData.results.forEach(function(planets) {\r",
+									"        pm.expect(planets).to.have.property('name').and.to.be.a('string');\r",
+									"        pm.expect(planets).to.have.property('rotation_period').and.to.be.a('string');\r",
+									"        pm.expect(planets).to.have.property('orbital_period').and.to.be.a('string');\r",
+									"        pm.expect(planets).to.have.property('diameter').and.to.be.a('string');\r",
+									"        pm.expect(planets).to.have.property('climate').and.to.be.a('string');\r",
+									"        pm.expect(planets).to.have.property('gravity').and.to.be.a('string');\r",
+									"        pm.expect(planets).to.have.property('terrain').and.to.be.an('string');\r",
+									"        pm.expect(planets).to.have.property('surface_water').and.to.be.an('string');\r",
+									"        pm.expect(planets).to.have.property('population').and.to.be.an('string');\r",
+									"        pm.expect(planets).to.have.property('residents').and.to.be.an('array');\r",
+									"        pm.expect(planets).to.have.property('films').and.to.be.an('array');\r",
+									"        pm.expect(planets).to.have.property('created').and.to.be.a('string');\r",
+									"        pm.expect(planets).to.have.property('edited').and.to.be.a('string');\r",
+									"        pm.expect(planets).to.have.property('url').and.to.be.a('string');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"//Verify Count Field\r",
+									"pm.test(\"Verify Planet Count\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.count).to.eql(60);\r",
+									"});\r",
+									"\r",
+									"//Verify API Format Structure\r",
+									"pm.test(\"verify API Format Structure\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    jsonData.results.forEach(function(film) {\r",
+									"        pm.expect(film.url).to.match(/^https:\\/\\/swapi\\.dev\\/api\\/planets\\/\\d+\\/$/);\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"id": "8d021e72-14c0-4dbb-98bc-bbc14cf2daa4",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -711,7 +946,24 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": ""
+						"url": {
+							"raw": "https://swapi.dev/api/planets?page=4",
+							"protocol": "https",
+							"host": [
+								"swapi",
+								"dev"
+							],
+							"path": [
+								"api",
+								"planets"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "4"
+								}
+							]
+						}
 					},
 					"response": []
 				},
