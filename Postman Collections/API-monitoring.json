@@ -83,7 +83,7 @@
 						"disableBodyPruning": true
 					},
 					"request": {
-						"method": "HEAD",
+						"method": "GET",
 						"header": [],
 						"url": "https://swapi.dev/api/"
 					},
@@ -165,6 +165,59 @@
 					},
 					"request": {
 						"method": "HEAD",
+						"header": [],
+						"url": "https://swapi.dev/api/"
+					},
+					"response": []
+				},
+				{
+					"name": "All Listing",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f6257e12-8a9f-4e43-b9ea-d2af31f964f3",
+								"exec": [
+									"//Fixed syntax error in the body assertion\r",
+									"pm.test(\"Status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"OPTIONS response has Allow header\", function () {\r",
+									"    pm.response.to.have.header(\"Allow\");\r",
+									"    const allowedMethods = pm.response.headers.get(\"Allow\").split(\", \");\r",
+									"    pm.expect(allowedMethods).to.include.members([\"GET\", \"HEAD\", \"OPTIONS\"]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body is empty\", function () {\r",
+									"    pm.response.to.have.jsonBody({\r",
+									"        \"name\": \"Api Root\",\r",
+									"        \"description\": \"\",\r",
+									"        \"renders\": [\r",
+									"            \"application/json\",\r",
+									"            \"text/html\",\r",
+									"            \"application/json\"\r",
+									"        ],\r",
+									"        \"parses\": [\r",
+									"            \"application/json\",\r",
+									"            \"application/x-www-form-urlencoded\",\r",
+									"            \"multipart/form-data\"\r",
+									"        ]\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "ce9df4c2-278d-458c-8d09-b35b0273e6e0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "OPTIONS",
 						"header": [],
 						"url": "https://swapi.dev/api/"
 					},
@@ -1317,41 +1370,6 @@
 				}
 			],
 			"id": "ad5f691e-0f2f-4f5a-b4a8-4be86681d679"
-		},
-		{
-			"name": "https://swapi.dev/api/",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "f6257e12-8a9f-4e43-b9ea-d2af31f964f3",
-						"exec": [
-							"//Server Status\r",
-							"pm.test(\"Status code is 200\", function(){\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"OPTIONS response has Allow header\", function () {\r",
-							"    pm.response.to.have.header(\"Allow\");\r",
-							"    const allowedMethods = pm.response.headers.get(\"Allow\").split(\", \");\r",
-							"    pm.expect(allowedMethods).to.include.members([\"GET\", \"POST\", \"OPTIONS\"]);\r",
-							"});"
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"id": "ce9df4c2-278d-458c-8d09-b35b0273e6e0",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "OPTIONS",
-				"header": [],
-				"url": "https://swapi.dev/api/"
-			},
-			"response": []
 		}
 	]
 }
