@@ -89,6 +89,87 @@
 						"url": "https://swapi.dev/api/"
 					},
 					"response": []
+				},
+				{
+					"name": "All Listing Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "190c2363-ec2d-4315-a8a3-1423e15cccc3",
+								"exec": [
+									"//Server Status\r",
+									"pm.test(\"Status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//Verify General Structure\r",
+									"pm.test(\"Response structure is valid\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    \r",
+									"    // Check top-level structure\r",
+									"    pm.expect(jsonData).to.be.an('object');\r",
+									"    pm.expect(jsonData).to.have.property('people');\r",
+									"    pm.expect(jsonData).to.have.property('planets');\r",
+									"    pm.expect(jsonData).to.have.property('films');\r",
+									"    pm.expect(jsonData).to.have.property('species');\r",
+									"    pm.expect(jsonData).to.have.property('vehicles');\r",
+									"    pm.expect(jsonData).to.have.property('starships');\r",
+									"});\r",
+									"\r",
+									"//Verify API Format Structure\r",
+									"pm.test(\"verify API Format Structure\", function () {\r",
+									"    var jsonData = pm.response.json(); // Moved the variable declaration to the top\r",
+									"    const urlRegex = /^https:\\/\\/swapi\\.dev\\/api\\/[a-z]+\\/$/;\r",
+									"    Object.values(jsonData).forEach(url => {\r",
+									"        pm.expect(url).to.match(urlRegex);\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate API Listing\", function () {\r",
+									"    var jsonData = pm.response.json(); // Moved the variable declaration to the top\r",
+									"    var expectedApiBody = {\r",
+									"        \"people\": \"https://swapi.dev/api/people/\",\r",
+									"        \"planets\": \"https://swapi.dev/api/planets/\",\r",
+									"        \"films\": \"https://swapi.dev/api/films/\",\r",
+									"        \"species\": \"https://swapi.dev/api/species/\",\r",
+									"        \"vehicles\": \"https://swapi.dev/api/vehicles/\",\r",
+									"        \"starships\": \"https://swapi.dev/api/starships/\"\r",
+									"    };\r",
+									"\r",
+									"    // Iterate through each key in the expected API body and check the response\r",
+									"    Object.keys(expectedApiBody).forEach(function(key) {\r",
+									"        pm.expect(jsonData[key]).to.eql(expectedApiBody[key]);\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "9472a7fc-6333-41e3-aa0f-92fdeea52e21",
+								"exec": [
+									"console.log(pm.globals.get(\"Prod_URL\")); "
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "ac308f79-279d-452e-82ca-3933c897ad9f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://swapi.dev/api/"
+					},
+					"response": []
 				}
 			],
 			"id": "f062c863-f09f-487f-a0fe-4e6f0ad6a5f1"
