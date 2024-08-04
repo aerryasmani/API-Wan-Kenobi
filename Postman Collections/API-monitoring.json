@@ -129,7 +129,17 @@
 									"});\r",
 									"\r",
 									"// Log headers for debugging (optional)\r",
-									"console.log(pm.response.headers.all());"
+									"console.log(pm.response.headers.all());\r",
+									"\r",
+									"pm.test(\"Strict-Transport-Security header is present\", function () {\r",
+									"    pm.response.to.have.header(\"Strict-Transport-Security\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Strict-Transport-Security header has correct value\", function () {\r",
+									"    const hsts = pm.response.headers.get(\"Strict-Transport-Security\");\r",
+									"    pm.expect(hsts).to.include(\"max-age=\");\r",
+									"    pm.expect(hsts).to.match(/max-age=\\d+/);\r",
+									"});"
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -1348,7 +1358,7 @@
 						"disableBodyPruning": true
 					},
 					"request": {
-						"method": "HEAD",
+						"method": "GET",
 						"header": [],
 						"url": {
 							"raw": "https://swapi.dev/api/planets?page=6",
