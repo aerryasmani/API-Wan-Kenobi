@@ -1500,5 +1500,72 @@
 			},
 			"response": []
 		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "2783f4ed-b417-4c09-a04a-8ee6839cfd58",
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "dd2766b9-4ddb-4819-88b5-5a535ddf1614",
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"// Create a summary of test results\r",
+					"let totalTests = 0;\r",
+					"let passedTests = 0;\r",
+					"let failedTests = 0;\r",
+					"\r",
+					"pm.globals.get(\"tests\").forEach(test => {\r",
+					"    totalTests += test.tests.length;\r",
+					"    passedTests += test.tests.filter(t => t.passed).length;\r",
+					"    failedTests += test.tests.filter(t => !t.passed).length;\r",
+					"});\r",
+					"\r",
+					"let summaryMessage = `\r",
+					"Collection \"${pm.info.name}\" has finished running.\r",
+					"\r",
+					"Test Summary:\r",
+					"Total Tests: ${totalTests}\r",
+					"Passed: ${passedTests}\r",
+					"Failed: ${failedTests}\r",
+					"\r",
+					"Success Rate: ${((passedTests / totalTests) * 100).toFixed(2)}%\r",
+					"`;\r",
+					"\r",
+					"// Send the request to Discord with the summary\r",
+					"pm.sendRequest({\r",
+					"    url: 'https://discord.com/api/webhooks/1270408465709273148/SGRmCw59JqucWZCnQrqtX8Y27NjLQRPGXTpea9dSFILKEX81a9fp4BRKb-gC30k_jXTY',\r",
+					"    method: 'POST',\r",
+					"    header: {\r",
+					"        'Content-Type': 'application/json'\r",
+					"    },\r",
+					"    body: {\r",
+					"        mode: 'raw',\r",
+					"        raw: JSON.stringify({\r",
+					"            content: summaryMessage,\r",
+					"            username: \"Postman Notifier\",\r",
+					"            avatar_url: \"https://assets.getpostman.com/common-share/postman-logo-horizontal-320x132.png\"\r",
+					"        })\r",
+					"    }\r",
+					"}, function (err, res) {\r",
+					"    if (err) {\r",
+					"        console.log(err);\r",
+					"    } else {\r",
+					"        console.log('Notification with summary sent to Discord');\r",
+					"    }\r",
+					"});"
+				]
+			}
+		}
 	]
 }
