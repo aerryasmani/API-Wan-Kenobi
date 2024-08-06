@@ -244,13 +244,83 @@
 			"item": [
 				{
 					"name": "New Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b1e36029-9e40-4261-9074-088eb10e96be",
+								"exec": [
+									"//Server Status\r",
+									"pm.test(\"Status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//Verify General Structure\r",
+									"pm.test(\"Response structure is valid\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    \r",
+									"    // Check top-level structure\r",
+									"    pm.expect(jsonData).to.be.an('object');\r",
+									"    pm.expect(jsonData).to.have.property('count');\r",
+									"    pm.expect(jsonData).to.have.property('next');\r",
+									"    pm.expect(jsonData).to.have.property('previous');\r",
+									"    pm.expect(jsonData).to.have.property('results').and.to.be.an('array');\r",
+									"});\r",
+									"\r",
+									"//Verify People Structure Count\r",
+									"pm.test(\"Verify People Structure Count\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    // Validate each film in results\r",
+									"    jsonData.results.forEach(function(people) {\r",
+									"        pm.expect(people).to.have.property('name').and.to.be.a('string');\r",
+									"        pm.expect(people).to.have.property('height').and.to.be.a('integer');\r",
+									"        pm.expect(people).to.have.property('mass').and.to.be.a('string');\r",
+									"        pm.expect(people).to.have.property('hair_color').and.to.be.a('string');\r",
+									"        pm.expect(people).to.have.property('skin_color').and.to.be.a('string');\r",
+									"        pm.expect(people).to.have.property('eye_color').and.to.be.a('string');\r",
+									"        pm.expect(people).to.have.property('birth_year').and.to.be.an('array');\r",
+									"        pm.expect(people).to.have.property('gender').and.to.be.an('array');\r",
+									"        pm.expect(people).to.have.property('homeworld').and.to.be.an('array');\r",
+									"        pm.expect(people).to.have.property('films').and.to.be.an('array');\r",
+									"        pm.expect(people).to.have.property('species').and.to.be.an('array');\r",
+									"        pm.expect(people).to.have.property('vehicles').and.to.be.an('array');\r",
+									"        pm.expect(people).to.have.property('starships').and.to.be.an('array');\r",
+									"        pm.expect(people).to.have.property('created').and.to.be.a('string');\r",
+									"        pm.expect(people).to.have.property('edited').and.to.be.a('string');\r",
+									"        pm.expect(people).to.have.property('url').and.to.be.a('string');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"//Verify Count Field\r",
+									"pm.test(\"Verify People Count\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.count).to.eql(82);\r",
+									"});\r",
+									"\r",
+									"//Verify API Format Structure\r",
+									"pm.test(\"verify API Format Structure\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    jsonData.results.forEach(function(film) {\r",
+									"        pm.expect(film.url).to.match(/^https:\\/\\/swapi\\.dev\\/api\\/people\\/\\d+\\/$/);\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"id": "6cc8fce2-db45-48a7-87ae-a5293597ce53",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": "https://swapi.dev/api/people"
 					},
 					"response": []
 				}
