@@ -1471,41 +1471,13 @@
 				}
 			],
 			"id": "ad5f691e-0f2f-4f5a-b4a8-4be86681d679"
-		},
-		{
-			"name": "Notification",
-			"id": "b86b5bd7-594d-4ead-8e61-1e8777815e03",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"content\": \"Your Monitor Runner is done!\",\r\n  \"username\": \"Finn\",\r\n  \"avatar_url\": \"https://i.pinimg.com/564x/33/c5/13/33c513aa28f967444110ff9a28f52ebe.jpg\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": "https://discord.com/api/webhooks/1270408465709273148/SGRmCw59JqucWZCnQrqtX8Y27NjLQRPGXTpea9dSFILKEX81a9fp4BRKb-gC30k_jXTY"
-			},
-			"response": []
 		}
 	],
 	"event": [
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "2783f4ed-b417-4c09-a04a-8ee6839cfd58",
+				"id": "eaed1370-0abb-48ad-b62a-a08281141e0e",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
@@ -1516,21 +1488,40 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "dd2766b9-4ddb-4819-88b5-5a535ddf1614",
+				"id": "714e900e-a9fc-41ca-8063-9e5ecfd412c7",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
-					"// Create a summary of test results\r",
+					"// Initialize variables for test summary\r",
 					"let totalTests = 0;\r",
 					"let passedTests = 0;\r",
 					"let failedTests = 0;\r",
 					"\r",
-					"pm.globals.get(\"tests\").forEach(test => {\r",
-					"    totalTests += test.tests.length;\r",
-					"    passedTests += test.tests.filter(t => t.passed).length;\r",
-					"    failedTests += test.tests.filter(t => !t.passed).length;\r",
-					"});\r",
+					"// Check if we can access the test results\r",
+					"if (pm.globals.has(\"tests\")) {\r",
+					"    const testResults = pm.globals.get(\"tests\");\r",
+					"    if (Array.isArray(testResults)) {\r",
+					"        testResults.forEach(test => {\r",
+					"            if (test && Array.isArray(test.tests)) {\r",
+					"                totalTests += test.tests.length;\r",
+					"                passedTests += test.tests.filter(t => t.passed).length;\r",
+					"                failedTests += test.tests.filter(t => !t.passed).length;\r",
+					"            }\r",
+					"        });\r",
+					"    }\r",
+					"} else if (pm.response && pm.response.json && typeof pm.response.json === 'function') {\r",
+					"    // If we can't get global test results, try to get results from the current response\r",
+					"    try {\r",
+					"        const responseData = pm.response.json();\r",
+					"        if (responseData.total) totalTests = responseData.total;\r",
+					"        if (responseData.passed) passedTests = responseData.passed;\r",
+					"        if (responseData.failed) failedTests = responseData.failed;\r",
+					"    } catch (e) {\r",
+					"        console.error(\"Error parsing response JSON:\", e);\r",
+					"    }\r",
+					"}\r",
 					"\r",
+					"// Create the summary message\r",
 					"let summaryMessage = `\r",
 					"Collection \"${pm.info.name}\" has finished running.\r",
 					"\r",
@@ -1538,9 +1529,12 @@
 					"Total Tests: ${totalTests}\r",
 					"Passed: ${passedTests}\r",
 					"Failed: ${failedTests}\r",
-					"\r",
-					"Success Rate: ${((passedTests / totalTests) * 100).toFixed(2)}%\r",
 					"`;\r",
+					"\r",
+					"// Add success rate only if there were tests\r",
+					"if (totalTests > 0) {\r",
+					"    summaryMessage += `Success Rate: ${((passedTests / totalTests) * 100).toFixed(2)}%`;\r",
+					"}\r",
 					"\r",
 					"// Send the request to Discord with the summary\r",
 					"pm.sendRequest({\r",
@@ -1559,7 +1553,7 @@
 					"    }\r",
 					"}, function (err, res) {\r",
 					"    if (err) {\r",
-					"        console.log(err);\r",
+					"        console.log('Error sending notification to Discord:', err);\r",
 					"    } else {\r",
 					"        console.log('Notification with summary sent to Discord');\r",
 					"    }\r",
