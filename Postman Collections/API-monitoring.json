@@ -1479,8 +1479,24 @@
 				"disableBodyPruning": true
 			},
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"content\": \"Your Monitor Runner is done!\",\r\n  \"username\": \"Finn\",\r\n  \"avatar_url\": \"https://i.pinimg.com/564x/33/c5/13/33c513aa28f967444110ff9a28f52ebe.jpg\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://discord.com/api/webhooks/1270408465709273148/SGRmCw59JqucWZCnQrqtX8Y27NjLQRPGXTpea9dSFILKEX81a9fp4BRKb-gC30k_jXTY"
 			},
 			"response": []
 		}
