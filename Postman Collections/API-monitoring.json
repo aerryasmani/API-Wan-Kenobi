@@ -240,6 +240,24 @@
 			"id": "f062c863-f09f-487f-a0fe-4e6f0ad6a5f1"
 		},
 		{
+			"name": "People",
+			"item": [
+				{
+					"name": "New Request",
+					"id": "6cc8fce2-db45-48a7-87ae-a5293597ce53",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
+			"id": "450fc559-a212-4fff-af41-7feaf6cf340c"
+		},
+		{
 			"name": "Films",
 			"item": [
 				{
