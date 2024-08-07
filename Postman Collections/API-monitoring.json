@@ -1477,7 +1477,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "d6ae67c0-ee4f-4594-a7df-c89751082baf",
+				"id": "3804a443-8c24-4469-927e-69bba1446605",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
@@ -1488,11 +1488,11 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "64f88e71-68ad-4914-8f6d-a835cff2dc32",
+				"id": "3b449980-aecf-4c96-a4ab-34b079be0fb2",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
-					"/ Initialize variables for test summary\r",
+					"//Initialize variables for test summary\r",
 					"let totalTests = 0;\r",
 					"let passedTests = 0;\r",
 					"let failedTests = 0;\r",
