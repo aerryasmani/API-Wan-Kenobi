@@ -582,21 +582,61 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Listing Films",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"id": "2603a949-2af5-4540-80fa-b74216ee5e6b",
 								"exec": [
+									"pm.collectionVariables.set(\"totalTests\", (parseInt(pm.collectionVariables.get(\"totalTests\")) || 0) + 1);\r",
+									"if (pm.response.code === 200) {\r",
+									"    pm.collectionVariables.set(\"passedTests\", (parseInt(pm.collectionVariables.get(\"passedTests\")) || 0) + 1);\r",
+									"}\r",
+									"\r",
+									"//Server Status\r",
 									"pm.test(\"Status code is 200\", function(){\r",
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
-									"pm.collectionVariables.set(\"totalTests\", (parseInt(pm.collectionVariables.get(\"totalTests\")) || 0) + 1);\r",
-									"if (pm.response.code === 200) {\r",
-									"    pm.collectionVariables.set(\"passedTests\", (parseInt(pm.collectionVariables.get(\"passedTests\")) || 0) + 1);\r",
-									"}"
+									"pm.test(\"OPTIONS response has Allow header\", function () {\r",
+									"    pm.response.to.have.header(\"Allow\");\r",
+									"    const allowedMethods = pm.response.headers.get(\"Allow\").split(\", \");\r",
+									"    pm.expect(allowedMethods).to.include.members([\"GET\", \"HEAD\", \"OPTIONS\"]);\r",
+									"});\r",
+									"\r",
+									"// Test for the presence and value of the Server header\r",
+									"pm.test(\"Server header is present and correct\", function () {\r",
+									"    pm.response.to.have.header(\"Server\");\r",
+									"    const serverHeader = pm.response.headers.get(\"Server\");\r",
+									"    pm.expect(serverHeader).to.be.a('string');\r",
+									"    // You can add a specific check if you know the expected server value\r",
+									"    // pm.expect(serverHeader).to.equal(\"ExpectedServerName\");\r",
+									"});\r",
+									"\r",
+									"// Test for the presence and value of the Content-Type header\r",
+									"pm.test(\"Content-Type header is present and correct\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    const contentType = pm.response.headers.get(\"Content-Type\");\r",
+									"    pm.expect(contentType).to.be.a('string');\r",
+									"    \r",
+									"    // Check if Content-Type is application/json\r",
+									"    // Modify this if you expect a different content type\r",
+									"    pm.expect(contentType).to.include('application/json');\r",
+									"});\r",
+									"\r",
+									"// Log headers for debugging (optional)\r",
+									"console.log(pm.response.headers.all());\r",
+									"\r",
+									"pm.test(\"Strict-Transport-Security header is present\", function () {\r",
+									"    pm.response.to.have.header(\"Strict-Transport-Security\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Strict-Transport-Security header has correct value\", function () {\r",
+									"    const hsts = pm.response.headers.get(\"Strict-Transport-Security\");\r",
+									"    pm.expect(hsts).to.include(\"max-age=\");\r",
+									"    pm.expect(hsts).to.match(/max-age=\\d+/);\r",
+									"});"
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -608,9 +648,9 @@
 						"disableBodyPruning": true
 					},
 					"request": {
-						"method": "GET",
+						"method": "HEAD",
 						"header": [],
-						"url": "https://restcountries.com/v3.1/all"
+						"url": "https://swapi.dev/api/films"
 					},
 					"response": []
 				}
