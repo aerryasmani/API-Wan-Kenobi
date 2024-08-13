@@ -640,8 +640,8 @@
 									"\r",
 									"pm.test(\"Etag value is present\",function(){\r",
 									"    const ETag =pm.response.headers.get(\"73dffe18f022f65acc88f914f65f2922\")\r",
-									"    pm.expect(ETag).to.include(\"73dffe18f022f65acc88f914f65f2922\");\r",
-									"    pm.expect(hsETags).to.match(\"73dffe18f022f65acc88f914f65f2922\");\r",
+									"    pm.expect(ETag).to.include(\"string\");\r",
+									"    pm.expect(ETag).to.match(\"73dffe18f022f65acc88f914f65f2922\");\r",
 									"});"
 								],
 								"type": "text/javascript",
