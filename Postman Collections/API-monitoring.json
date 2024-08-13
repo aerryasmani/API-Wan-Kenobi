@@ -1702,18 +1702,21 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "019cc474-d28c-423b-aa58-feba5ff126e0",
+				"id": "62a8c9e5-280d-4e34-a0ee-8f382090696a",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
-					"pm.globals.set(\"notificationSent\", false);"
+					"pm.globals.set(\"notificationSent\", false);\r",
+					"pm.collectionVariables.set(\"totalTests\", \"0\");\r",
+					"pm.collectionVariables.set(\"passedTests\", \"0\");\r",
+					"pm.collectionVariables.set(\"summaryReportSent\", \"false\");"
 				]
 			}
 		},
 		{
 			"listen": "test",
 			"script": {
-				"id": "9d3500bd-f4fd-48bc-958b-bd7ab599c496",
+				"id": "4c35c8d1-71de-4044-a512-16a79050a024",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
@@ -1741,24 +1744,44 @@
 					"    });\r",
 					"}\r",
 					"\r",
-					"// Gather test results\r",
-					"const totalTests = pm.globals.get(\"totalTests\");\r",
-					"const passedTests = pm.globals.get(\"passedTests\");\r",
-					"const failedTests = totalTests - passedTests;\r",
+					"// Check if summary has already been sent\r",
+					"if (!pm.collectionVariables.get(\"summaryReportSent\")) {\r",
+					"    // Gather test results\r",
+					"    const totalTests = parseInt(pm.collectionVariables.get(\"totalTests\")) || 0;\r",
+					"    const passedTests = parseInt(pm.collectionVariables.get(\"passedTests\")) || 0;\r",
+					"    const failedTests = totalTests - passedTests;\r",
 					"\r",
-					"// Create summary message\r",
-					"const summaryMessage = `\r",
+					"    // Create summary message\r",
+					"    const summaryMessage = `\r",
 					"🔔 Test Run Summary:\r",
 					"Total Tests: ${totalTests}\r",
 					"Passed: ${passedTests}\r",
 					"Failed: ${failedTests}\r",
-					"Success Rate: ${((passedTests / totalTests) * 100).toFixed(2)}%\r",
+					"Success Rate: ${totalTests > 0 ? ((passedTests / totalTests) * 100).toFixed(2) : 0}%\r",
 					"`;\r",
 					"\r",
-					"// Send summary to Discord\r",
-					"sendToDiscord(summaryMessage);"
+					"    // Send summary to Discord\r",
+					"    sendToDiscord(summaryMessage);\r",
+					"\r",
+					"    // Set flag to indicate summary has been sent\r",
+					"    pm.collectionVariables.set(\"summaryReportSent\", \"true\");\r",
+					"}"
 				]
 			}
+		}
+	],
+	"variable": [
+		{
+			"key": "totalTests",
+			"value": ""
+		},
+		{
+			"key": "passedTests",
+			"value": ""
+		},
+		{
+			"key": "summaryReportSent",
+			"value": ""
 		}
 	]
 }
