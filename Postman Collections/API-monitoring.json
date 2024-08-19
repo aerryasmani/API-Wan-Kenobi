@@ -587,7 +587,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2603a949-2af5-4540-80fa-b74216ee5e6b",
+								"id": "e5f62551-a28a-43d5-bfc4-fb14602c08d6",
 								"exec": [
 									"pm.collectionVariables.set(\"totalTests\", (parseInt(pm.collectionVariables.get(\"totalTests\")) || 0) + 1);\r",
 									"if (pm.response.code === 200) {\r",
@@ -639,9 +639,9 @@
 									"});\r",
 									"\r",
 									"pm.test(\"Etag value is present\",function(){\r",
-									"    const ETag = pm.response.headers.get(\"ETag\")\r",
-									"    pm.expect(ETag).to.include(\"73dffe18f022f65acc88f914f65f2922\");\r",
-									"    pm.expect(ETag).to.match(\"73dffe18f022f65acc88f914f65f2922\");\r",
+									"    const ETag = pm.response.headers.get(\"ETag\");\r",
+									"\r",
+									"    pm.expect(ETag).to.match(/^\"73dffe18f022f65acc88f914f65f2922\"?$/);\r",
 									"});"
 								],
 								"type": "text/javascript",
